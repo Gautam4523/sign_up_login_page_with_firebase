@@ -1,22 +1,29 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
-import 'login_screen.dart';
+import '../controller/controller.dart';
+import 'login_page.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final Controller controller = Get.put(Controller());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: InkWell(
-        onTap: () {
-          FirebaseAuth.instance.signOut().then(
+        onTap: () async {
+          controller.resetKey();
+
+          await FirebaseAuth.instance.signOut().then(
             (value) {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LoginScreen(),
+                  builder: (context) => LoginPage(),
                 ),
               );
             },
